@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TDEE Calculator</title>
+	<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+
+<body>
+	<div class = "container">
+		<div class = "card">
+			<div class = "card-header text-center" style = "font-size: 30px;"> TDEE Calculator</div>
+			<div class = "card-body text-center">
+				<form>
+					<div class = "form-group">
+						<label> <b>Sex: </b> </label>
+						<input type="radio" name="gender" id = "male" value="male"> Male
+						<input type="radio" name="gender" id = "female" value="female"> Female<br>
+					</div>
+					<div class = "form-group">
+						<label> <b>Age: </b></label>
+						<input type = "number" name = "age" id = "age" min = "1" max = "100">
+					</div>
+					<div class = "form-group">
+						<label> <b>Weight: </b> </label>
+						<input type = "number" name = "weight" id = "weight" min = "1" max = "600"><label>lbs</label>
+					</div>
+					<div class = "form-group">
+						<label> <b>Height: </b> </label>
+						<input type = "number" name = "height" id = "height" min = "1" max = "120"><label>inches</label>
+					</div>
+					<div class = "form-group">
+						<button class="w3-button w3-yellow w3-border" type = "button" onclick ="getBMR()">Calculate Your BMR</button>
+					</div>
+					<div class = "form-group">
+						<p id = "bmr"></p>
+					</div>
+
+					<div class = "form-group">
+						<label> <b>Describe your activity level: </b></label><br>
+						<input type = "radio" name = "activity" id = "a1" value = "sedentary"> Sedentary
+						<input type = "radio" name = "activity" id = "a2" value = "lightly active"> Lightly Active
+						<input type = "radio" name = "activity" id = "a3" value = "moderately active"> Moderately Active
+						<input type = "radio" name = "activity" id = "a4" value = "heavily active"> Heavily Active
+						<input type = "radio" name = "activity" id = "a5" value = "athlete"> Athlete<br>
+					</div>
+
+					<div class = "form-group">
+						<button class="w3-button w3-yellow w3-border" type = "button" onclick = "levelOfActivity()">Calculate Your Maintenance Calories</button>
+					</div>
+
+					<div class = "form-group">
+						<p id = "maintenanceCals"></p>
+					</div>
+
+					<div class = "form-group">
+						<label> <b>What is your goal?: </b> </label><br>
+						<input type = "radio" name = "goal" id = "g1" value = "gain weight"> Gain Weight
+						<input type = "radio" name = "goal" id = "g2" value = "lose weight"> Lose Weight<br>
+					</div>
+
+					<div class = "form-group">
+						<button class="w3-button w3-yellow w3-border" type = "button" onclick = "goals()">Calculate Your Goal Calories</button>
+					</div>
+
+					<div class = "form-group">
+						<p id = "goals"></p>
+					</div>
+
+					<div class = "form-group">
+						<label> <b>Which diet plan would you like to follow?: </b></label><br>
+						<input type = "radio" name = "diet" id = "d1" value = "standard"> Standard American Diet<br>
+						<input type = "radio" name = "diet" id = "d2" value = "lightly active"> Ketogenic Diet<br>
+						<input type = "radio" name = "diet" id = "d3" value = "moderately active"> Paleo Diet<br>
+						<input type = "radio" name = "diet" id = "d4" value = "moderately active"> Low Carb Diet
+						<input type = "radio" name = "diet" id = "d5" value = "heavily active"> Moderate Carb Diet
+						<input type = "radio" name = "diet" id = "d6" value = "athlete"> High Carb Diet
+					</div>
+
+					<div class = "form-group">
+						<button class="w3-button w3-yellow w3-border" type = "button" onclick = "dietPlan()">Calculate your Macronutrients</button>
+					</div>
+
+					<div class = "form-group">
+						<p id = "dietPlan"></p>
+						<p id = "dietPlan2"></p>
+						<p id = "dietPlan3"></p>
+					</div>
+
+					<div class = "form-group" id = "piechart">
+					</div>
+						
+				</form>
+			</div>
+		</div>
+	</div>
+<script>
+
+
+
+	function getBMR(){
+		 age = document.getElementById("age").value;
+		 weight = document.getElementById("weight").value;
+		 height = document.getElementById("height").value;
+
+		if (document.getElementById('male').checked){
+			 bmr = 66.47 + (6.24 * weight) + (12.7 * height) - (6.755 * age);
+			 bmr = Math.round(bmr);
+			 bmrString = bmr.toString();
+			 bmrString = bmrString.bold();
+		}
+		else{
+			 bmr = 655.1 + (4.35 * weight) + (4.7 * height) - (4.7 * age);
+			 bmr = Math.round(bmr);
+			 bmrString = bmr.toString();
+			 bmrString = bmrString.bold();
+		}
+		document.getElementById("bmr").innerHTML = "You burn " + bmrString + " calories by doing nothing!"
+	}
+
+	function levelOfActivity(){
+	
+		if (document.getElementById('a1').checked){
+			 cals = bmr * 1.2;
+			 cals = Math.round(cals);
+			 calsString = cals.toString();
+			 calsString = calsString.bold();
+		} 
+		else if (document.getElementById('a2').checked){
+			 cals = bmr * 1.375;
+			 cals = Math.round(cals);
+			 calsString = cals.toString();
+			 calsString = calsString.bold();
+		} 
+		else if (document.getElementById('a3').checked){
+			 cals = bmr * 1.55;
+			 cals = Math.round(cals);
+			 calsString = cals.toString();
+			 calsString = calsString.bold();
+		} 
+		else if (document.getElementById('a4').checked){
+			 cals = bmr * 1.725;
+			 cals = Math.round(cals);
+			 calsString = cals.toString();
+			 calsString = calsString.bold();
+		} 
+		else if (document.getElementById('a5').checked){
+			 cals = bmr * 1.9;
+			 cals = Math.round(cals);
+			 calsString = cals.toString();
+			 calsString = calsString.bold();
+		}
+		document.getElementById("maintenanceCals").innerHTML = "To stay the same weight, you must eat " + calsString + " calories daily."
+	}
+
+	function goals(){
+		if (document.getElementById("g1").checked){
+			newCals = cals + 500;
+			newCalsString = newCals.toString();
+			newCalsString = newCalsString.bold();
+			document.getElementById("goals").innerHTML = "You need to eat " + newCalsString + " calories to gain 1 lb weekly (the recommeneded amount). "
+		} else if (document.getElementById("g2").checked){
+			newCals = cals - 500;
+			newCalsString = newCals.toString();
+			newCalsString = newCalsString.bold();
+			document.getElementById("goals").innerHTML = "You need to eat " + newCalsString + " calories to lose 1 lb weekly (the recommeneded amount). "
+		}
+		
+	}
+
+	function dietPlan(){
+		if (document.getElementById('d1').checked){
+			 carbs = Math.round((newCals * 0.5)/4);
+			 fats = Math.round((newCals * 0.3)/9);
+			 protein = Math.round((newCals * 0.2)/4);
+			 carbsString = carbs.toString();
+			 carbsString = carbsString.bold();
+			 fatsString = fats.toString();
+			 fatsString = fatsString.bold();
+			 proteinString = protein.toString();
+			 proteinString = proteinString.bold();
+			 document.getElementById("dietPlan").innerHTML = "Carbs: " + carbsString + "g"
+			 document.getElementById("dietPlan2").innerHTML = "Fats: " + fatsString + "g"
+			 document.getElementById("dietPlan3").innerHTML = "Protein: " + proteinString + "g"
+
+		} 
+		else if (document.getElementById('d2').checked){
+			 carbs = Math.round((newCals * 0.05)/4);
+			 fats = Math.round((newCals * 0.75)/9);
+			 protein = Math.round((newCals * 0.2)/4);
+			 carbsString = carbs.toString();
+			 carbsString = carbsString.bold();
+			 fatsString = fats.toString();
+			 fatsString = fatsString.bold();
+			 proteinString = protein.toString();
+			 proteinString = proteinString.bold();
+			 document.getElementById("dietPlan").innerHTML = "Carbs: " + carbsString + "g"
+			 document.getElementById("dietPlan2").innerHTML = "Fats: " + fatsString + "g"
+			 document.getElementById("dietPlan3").innerHTML = "Protein: " + proteinString + "g"
+		} 
+		else if (document.getElementById('d3').checked){
+			 carbs = Math.round((newCals * 0.25)/4);
+			 fats = Math.round((newCals * 0.35)/9);
+			 protein = Math.round((newCals * 0.4)/4);
+			 carbsString = carbs.toString();
+			 carbsString = carbsString.bold();
+			 fatsString = fats.toString();
+			 fatsString = fatsString.bold();
+			 proteinString = protein.toString();
+			 proteinString = proteinString.bold();
+			 document.getElementById("dietPlan").innerHTML = "Carbs: " + carbsString + "g"
+			 document.getElementById("dietPlan2").innerHTML = "Fats: " + fatsString + "g"
+			 document.getElementById("dietPlan3").innerHTML = "Protein: " + proteinString + "g"
+		}
+		else if (document.getElementById('d4').checked){
+			 carbs = Math.round((newCals * 0.20)/4);
+			 fats = Math.round((newCals * 0.40)/9);
+			 protein = Math.round((newCals * 0.40)/4);
+			 carbsString = carbs.toString();
+			 carbsString = carbsString.bold();
+			 fatsString = fats.toString();
+			 fatsString = fatsString.bold();
+			 proteinString = protein.toString();
+			 proteinString = proteinString.bold();
+			 document.getElementById("dietPlan").innerHTML = "Carbs: " + carbsString + "g"
+			 document.getElementById("dietPlan2").innerHTML = "Fats: " + fatsString + "g"
+			 document.getElementById("dietPlan3").innerHTML = "Protein: " + proteinString + "g"
+		} 
+		else if (document.getElementById('d5').checked){
+			 carbs = Math.round((newCals * 0.35)/4);
+			 fats = Math.round((newCals * 0.35)/9);
+			 protein = Math.round((newCals * 0.3)/4);
+			 carbsString = carbs.toString();
+			 carbsString = carbsString.bold();
+			 fatsString = fats.toString();
+			 fatsString = fatsString.bold();
+			 proteinString = protein.toString();
+			 proteinString = proteinString.bold();
+			 document.getElementById("dietPlan").innerHTML = "Carbs: " + carbsString + "g"
+			 document.getElementById("dietPlan2").innerHTML = "Fats: " + fatsString + "g"
+			 document.getElementById("dietPlan3").innerHTML = "Protein: " + proteinString + "g"
+		}
+		else if (document.getElementById('d6').checked){
+			 carbs = Math.round((newCals * 0.5)/4);
+			 fats = Math.round((newCals * 0.2)/9);
+			 protein = Math.round((newCals * 0.3)/4);
+			 carbsString = carbs.toString();
+			 carbsString = carbsString.bold();
+			 fatsString = fats.toString();
+			 fatsString = fatsString.bold();
+			 proteinString = protein.toString();
+			 proteinString = proteinString.bold();
+			 document.getElementById("dietPlan").innerHTML = "Carbs: " + carbsString + "g"
+			 document.getElementById("dietPlan2").innerHTML = "Fats: " + fatsString + "g"
+			 document.getElementById("dietPlan3").innerHTML = "Protein: " + proteinString + "g"
+		} 
+		drawChart(carbs, fats, protein)
+	}
+</script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+	function drawChart(carbs, fats, protein){
+		data = google.visualization.arrayToDataTable([
+		  ['Macros', 'Grams'],
+		  ['Carbohydrates', carbs],
+		  ['Fats', fats],
+		  ['Protein', protein],
+		]);
+
+		options = {'width':1500, 'height':400};
+
+		chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  		chart.draw(data, options);
+	}
+
+</script>
